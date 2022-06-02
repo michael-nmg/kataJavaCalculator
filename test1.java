@@ -14,9 +14,11 @@ import java.util.HashMap;
 ////////////////////////////////////////////////////////////////////////////////////////
 
 public class Main {
-    public static void main (String[] args) {
+    public void main (String[] args) {
           //String reg = "\\w+|([+-/*])";
           //Pattern pattern = Pattern.compile("\\w+|([+-/*])");
+          Integer a = new Integer(0);
+          Integer b = new Integer(0);
           HashMap<String, Runnable> hash = new HashMap<>();
           hash.put("+", () -> System.out.println(a + b));
           hash.put("*", () -> System.out.println(a * b));
@@ -32,11 +34,9 @@ public class Main {
           }
           int a = Integer.parseInt(arr[0]);
           int b = Integer.parseInt(arr[2]);
-          hash.get(arr[1]).run();
+          hash.get(arr[1]).call();
     }
 }
-
-
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -101,9 +101,9 @@ function romanNumerals(number) {
     return data.map(f).reverse().join('');
 }
 
+///////////////////////////////////////////////////////////////////////////////////
 
 import java.io.*;
-
 public class Test {
 
    public static void main(String args[]) {
