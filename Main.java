@@ -6,60 +6,68 @@ import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.List;
+//import java.util.Exeption;
 //import java.util.regex.Pattern;
 //import java.util.function.*;
-//import java.util.List;
 //import java.util.stream.*;
 //import java.util.concurrent.Future;
 
-////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
 
 public class Main {
     static interface calcInterface {
         int calcOp(int x, int y);
     }
 
-    public static String calc(String input) {
-        Matcher matcher = Pattern.compile("\\w+|([+-/*])").matcher(scan);
+    public static String calc(String input) throws CalcExceptions {
+        Matcher matcher = Pattern.compile("\\w+|([+-/*])").matcher(input);
         String[] arr = new String[3];
-        for (int i = 0; matcher.find(); i++) {
+
+      try {
+          for (int i = 0; matcher.find(); i++) {
             arr[i] = matcher.group();//.trim();
+          }
+        } catch (ArrayIndexOutOfBoundsException excep) {
+          System.out.println("\n\n\tOnly binary operations are possible.\n\n");
+          //break;
         }
 
-        if (scan.equals("1")) {
-        System.out.println("Stop");
-        break;
-      }
-
-        arr.length == 3;
-        isOper(arr[1]);
-        isDig(arr[0]) && isDig(arr[1]);
 
 
-        //try catch dlinna massiva
-        //MessageFormat.format("Your text: {0};\nHis length: {1};\nExample: {2}\nExample: {3}",
-        String result = returncalcLamb(arr[1], Integer.parseInt(arr[0]), Integer.parseInt(arr[2]));
+      int var1 = Integer.parseInt(arr[0]);
+      int var2 = Integer.parseInt(arr[2]);
+
+      if (!(arr.length == 3)) {
+        throw new CalcExceptions("");
+      } else if (!isOper(arr[1])) {
+        throw new CalcExceptions("\n\n\tThe operation is not defined.\n\tPlease, use the available: +, -, *, /\n\n");
+      } else if (isDig(arr[0]) ^ isDig(arr[2])) {
+        throw new CalcExceptions("\n\n\tDifferent number systems are used.\n\n");
+      } else if (var1 < 1 && var1 > 10 || var2 < 1 && var2 > 10){
+
+      };
+
+      //isRome + romeFactorBoolean
 
 
+      int result = calcLamb(arr[1], var1, var2));
 
-        return result;
+      return result + "";
     }
 
-    public static void main(String[] args) {
-        //MessageFormat.format("Your text: {0};\nHis length: {1};\nExample: {2}\nExample: {3}",
+    public static void main(String[] args) throws CalcExceptions {
+        //System.out.println(MessageFormat.format("\n\n\tCalculator for binary operations.\n\tSupported operations: *, +, /, -.\n\tFor exit press 'CTRL+C'\n\n {0};\nHis length: {1};\nExample: {2}\nExample: {3}",)
         //System.out.println(romToInt("MMDCLXXXIX"));
-        //System.out.println();
-        //while (true) {
+        while (true) {
         String scan = new Scanner(System.in).nextLine().trim();
 
-
-        calc(scan);
-
+        System.out.println(calc(scan));
 
 
-
-        //}
+        }
     }
+
     public static int calcLamb(String oper, int x, int y) {
         calcInterface add = (a, b) -> a + b;
         calcInterface sub = (a, b) -> a - b;
@@ -109,9 +117,19 @@ public class Main {
     }
 
     private static boolean isOper (String oper) {
-        String[] nameArray = new String[]{"+", "-", "*", "/"};
-        List nameList = new ArrayList<>(Arrays.asList(nameArray));
-        return nameList.contains(oper);
+        String[] operAr = new String[]{"+", "-", "*", "/"};
+        List opList = new ArrayList<>(Arrays.asList(operAr));
+        return opList.contains(oper);
+    }
+
+    private static boolean isRome (String num) {
+        String charRom = "MDCLXVI";
+        String[] numAr = num.toUpperCase().split("");
+        boolean result = true;
+        for (int i = 0; i < numAr.length; i++) {
+          result = result && charRom.contains(numAr[i]) ? true : false;
+        }
+        return result;
     }
 
 }
