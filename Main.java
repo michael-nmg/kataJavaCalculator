@@ -6,14 +6,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.*;
+import java.util.function.IntBinaryOperator;
 
 public class Main {
-    static interface calcInterface {
-        int calcOp(int x, int y);
-    }
 
-    public static String calc(String input) throws CalcExceptions,
-    ArrayIndexOutOfBoundsException {
+    public static String calc(String input) throws CalcExceptions, ArrayIndexOutOfBoundsException {
         Matcher matcher = Pattern.compile("\\d*[.,]\\d*|\\w+|([+-/*!;%:?@#$%^&])").matcher(input);
         String[] arr = new String[3];
         boolean calcError = false;
@@ -63,22 +60,12 @@ public class Main {
     }
 
     public static int calcLamb(String oper, int x, int y) {
-        calcInterface add = (a, b) -> a + b;
-        calcInterface sub = (a, b) -> a - b;
-        calcInterface mul = (a, b) -> a * b;
-        calcInterface div = (a, b) -> a / b;
-
-        switch(oper) {
-            case "+":
-                return add.calcOp(x, y);
-            case "-":
-                return sub.calcOp(x, y);
-            case "*":
-                return mul.calcOp(x, y);
-            case "/":
-                return div.calcOp (x, y);
-        }
-        return 0;
+      HashMap<String, IntBinaryOperator> hh = new HashMap<>();
+      hh.put("+", (int a,int b) -> a + b);
+      hh.put("-", (int a,int b) -> a - b);
+      hh.put("*", (int a,int b) -> a * b);
+      hh.put("/", (int a,int b) -> a / b);
+      return hh.get(oper).applyAsInt(x, y);
     }
 
     public static int romToInt (String num) {
